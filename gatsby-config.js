@@ -15,13 +15,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/content/blog`,
-        name: `blog`,
-      },
-    },
-    {
       resolve: `gatsby-theme-i18n`,
       options: {
         defaultLang: `en`,
@@ -35,6 +28,14 @@ module.exports = {
         i18nextOptions: {
           ns: ['index', 'layout', '404', 'page2'],
         },
+      },
+    },
+    {
+      resolve: 'gatsby-source-strapi',
+      options: {
+        apiURL: 'http://151.248.117.166:1337',
+        contentTypes: ['article'],
+        queryLimit: 1000,
       },
     },
     `gatsby-transformer-sharp`,

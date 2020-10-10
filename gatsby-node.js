@@ -1,3 +1,29 @@
+const crypto = require(`crypto`)
+
+exports.onCreateNode = async ({ node, actions, createNodeId }) => {
+  if (node.internal.type === 'StrapiArticle') {
+    const newNode = {
+      id: createNodeId(`StrapiArticleContent-${node.id}`),
+      parent: node.id,
+      children: [],
+      internal: {
+        content: node.content || ' ',
+        type: 'StrapiArticleContent',
+        mediaType: 'text/markdown',
+        contentDigest: crypto
+          .createHash('md5')
+          .update(node.content || ' ')
+          .digest('hex'),
+      },
+    }
+    actions.createNode(newNode)
+    actions.createParentChildLink({
+      parent: node,
+      child: newNode,
+    })
+  }
+}
+
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
 
@@ -5,18 +31,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   const result = await graphql(`
     {
-      blog: allFile(
-        filter: {
-          sourceInstanceName: { eq: "blog" }
-          children: { elemMatch: { internal: { type: { eq: "Mdx" } } } }
-        }
-      ) {
+      blog: allStrapiArticle {
         nodes {
-          childMdx {
-            frontmatter {
-              slug
-            }
-          }
+          slug
         }
       }
     }
@@ -29,12 +46,12 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   const blogPosts = result.data.blog.nodes
 
-  blogPosts.forEach(({ childMdx: node }) => {
+  blogPosts.forEach(({ slug }) => {
     createPage({
-      path: node.frontmatter.slug,
+      path: slug,
       component: blogTemplate,
       context: {
-        slug: node.frontmatter.slug,
+        slug,
       },
     })
   })

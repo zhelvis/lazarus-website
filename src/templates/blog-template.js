@@ -6,15 +6,18 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 
 const BlogTemplate = ({ data, pageContext }) => {
+  console.log(data)
   return (
     <Layout originalPath={pageContext.originalPath}>
       <SEO
-        title={data.mdx.frontmatter.title}
-        description={data.mdx.frontmatter.description}
+        title={data.strapiArticle.title}
+        description={data.strapiArticle.description}
       />
-      <Typography variant="h2">{data.mdx.frontmatter.title}</Typography>
+      <Typography variant="h2">{data.strapiArticle.title}</Typography>
       <div>
-        <MDXRenderer>{data.mdx.body}</MDXRenderer>
+        <MDXRenderer>
+          {data.childStrapiArticleContent.childMdx.body}
+        </MDXRenderer>
       </div>
     </Layout>
   )
@@ -24,16 +27,15 @@ export default BlogTemplate
 
 export const query = graphql`
   query Post($locale: String!, $slug: String!) {
-    mdx(
-      fields: { locale: { eq: $locale } }
-      frontmatter: { slug: { eq: $slug } }
-    ) {
-      frontmatter {
-        slug
-        title
-        description
+    strapiArticle(language: { eq: $locale }, slug: { eq: $slug }) {
+      title
+      description
+      slug
+      childStrapiArticleContent {
+        childMdx {
+          body
+        }
       }
-      body
     }
   }
 `
