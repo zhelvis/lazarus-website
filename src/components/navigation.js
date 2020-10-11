@@ -1,7 +1,8 @@
-import React from 'react'
-import { LocalizedLink } from 'gatsby-theme-i18n'
-import { useTranslation } from 'react-i18next'
+import React, { useContext } from 'react'
+import { useStaticQuery, graphql } from 'gatsby'
 import { List, ListItem, ListItemText, makeStyles } from '@material-ui/core'
+import { LocaleContext } from './localeProvider'
+import { LocalizedLink } from './localizedLink'
 
 const useStyles = makeStyles((theme) => ({
   navlink: {
@@ -20,7 +21,6 @@ const ListItemLink = ({ primary, to, ...props }) => {
         className={classes.navlink}
         {...props}
         button
-        disableRipple
         component={LocalizedLink}
         to={to}
       >
@@ -30,13 +30,40 @@ const ListItemLink = ({ primary, to, ...props }) => {
   )
 }
 
-const NavList = () => {
-  const { t } = useTranslation('layout')
+const NavList = ({ handleClose = null }) => {
+  const data = useStaticQuery(graphql`
+    query {
+      posts: allStrapiArticle {
+        edges {
+          node {
+            id
+            slug
+            title
+            locale {
+              code
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  const { locale } = useContext(LocaleContext)
+
+  const links = data.posts.edges
+    .filter(({ node }) => node.locale.code === locale)
+    .map(({ node }) => node)
+
   return (
     <List>
-      <ListItemLink to="/" primary={t('home')} />
-      <ListItemLink to="/page-2" primary={t('second')} />
-      <ListItemLink to="/mdx" primary="Mdx page" />
+      {links.map(({ id, slug, title }) => (
+        <ListItemLink
+          onClick={handleClose}
+          key={id}
+          to={slug}
+          primary={title}
+        />
+      ))}
     </List>
   )
 }

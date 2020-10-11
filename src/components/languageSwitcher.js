@@ -1,13 +1,15 @@
-import React from 'react'
-import { LocalizedLink, useLocalization } from 'gatsby-theme-i18n'
+import React, { useContext } from 'react'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 
 import TranslateIcon from '@material-ui/icons/Translate'
 
-const LanguageSwitcher = ({ originalPath = '/' }) => {
+import { LocaleContext } from './localeProvider'
+import { LocalizedLink } from './localizedLink'
+
+export const LanguageSwitcher = ({ originalPath = '/' }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
-  const { locale: currentLocale, config } = useLocalization()
+  const { locale: currentLocale, locales } = useContext(LocaleContext)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -34,13 +36,13 @@ const LanguageSwitcher = ({ originalPath = '/' }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {config.map((locale) => (
+        {locales.map((locale) => (
           <li key={locale.code}>
             <MenuItem
               component={LocalizedLink}
+              onClick={handleClose}
               to={originalPath}
               language={locale.code}
-              disableRipple
               selected={currentLocale === locale.code}
             >
               {locale.localName}
@@ -51,5 +53,3 @@ const LanguageSwitcher = ({ originalPath = '/' }) => {
     </div>
   )
 }
-
-export default LanguageSwitcher

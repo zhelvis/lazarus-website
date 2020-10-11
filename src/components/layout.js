@@ -12,8 +12,8 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 
 import ThemeSwitcher from './themeSwitcher'
-import LanguageSwitcher from './languageSwitcher'
 import NavList from './navigation'
+import { LanguageSwitcher } from './languageSwitcher'
 
 const drawerWidth = '18em'
 
@@ -63,10 +63,10 @@ const Layout = ({ children, originalPath = '/' }) => {
             </IconButton>
           </Hidden>
           <Typography className={classes.title} variant="h6">
-            Gatsby MUI Starter
+            Lazarus
           </Typography>
+          <LanguageSwitcher />
           <ThemeSwitcher />
-          <LanguageSwitcher originalPath={originalPath} />
         </Toolbar>
       </AppBar>
       <Hidden implementation="css" smDown>
@@ -93,7 +93,7 @@ const Layout = ({ children, originalPath = '/' }) => {
         >
           <Toolbar />
           <div className={classes.drawerContainer}>
-            <NavList />
+            <NavList handleClose={() => setOpen(!open)} />
           </div>
         </Drawer>
       </Hidden>

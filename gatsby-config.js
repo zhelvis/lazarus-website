@@ -15,26 +15,10 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-theme-i18n`,
-      options: {
-        defaultLang: `en`,
-        configPath: require.resolve(`./i18n/config.json`),
-      },
-    },
-    {
-      resolve: `gatsby-theme-i18n-react-i18next`,
-      options: {
-        locales: `./i18n/react-i18next`,
-        i18nextOptions: {
-          ns: ['index', 'layout', '404', 'page2'],
-        },
-      },
-    },
-    {
       resolve: 'gatsby-source-strapi',
       options: {
         apiURL: 'http://151.248.117.166:1337',
-        contentTypes: ['article'],
+        contentTypes: ['article', 'locale'],
         queryLimit: 1000,
       },
     },

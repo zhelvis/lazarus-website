@@ -3,14 +3,14 @@ export default {
     palette: {
       type: 'dark',
       primary: {
-        main: '#a789d6',
+        main: '#90caf9',
       },
     },
   },
   light: {
     palette: {
       primary: {
-        main: '#7335d4',
+        main: '#1976d2',
       },
     },
   },

@@ -1,5 +1,7 @@
 const crypto = require(`crypto`)
 
+const { getLocalizedPath } = require('./src/helpers')
+
 exports.onCreateNode = async ({ node, actions, createNodeId }) => {
   if (node.internal.type === 'StrapiArticle') {
     const newNode = {
@@ -32,8 +34,25 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const result = await graphql(`
     {
       blog: allStrapiArticle {
+        edges {
+          node {
+            locale {
+              code
+              default
+            }
+            slug
+          }
+        }
+      }
+      locales: allStrapiLocale {
         nodes {
-          slug
+          localName
+          langDir
+          name
+          hrefLang
+          default
+          dateFormat
+          code
         }
       }
     }
@@ -44,14 +63,29 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     return
   }
 
-  const blogPosts = result.data.blog.nodes
+  const blogPosts = result.data.blog.edges
 
-  blogPosts.forEach(({ slug }) => {
+  const locales = result.data.locales.nodes
+
+  const defaultLocale = locales.filter((locale) => locale.default)[0].code
+
+  console.log(defaultLocale)
+
+  blogPosts.forEach(({ node }) => {
+    const { locale, slug } = node
+
+    const localizedPath = getLocalizedPath(defaultLocale, locale.code, slug)
+
+    console.log(localizedPath)
+
     createPage({
-      path: slug,
+      path: localizedPath,
       component: blogTemplate,
       context: {
         slug,
+        locale: locale.code,
+        defaultLocale,
+        locales,
       },
     })
   })
