@@ -40,15 +40,17 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    maxWidth: 720,
-    padding: theme.spacing(3),
+    maxWidth: 1024,
+    padding: `${theme.spacing(3)}px 5vw`,
   },
 }))
 
-const Layout = ({ children, originalPath = '/' }) => {
+const Layout = ({ children, pageContext }) => {
   const classes = useStyles()
 
   const [open, setOpen] = React.useState(false)
+
+  console.log(pageContext)
 
   return (
     <div className={classes.root}>
@@ -67,7 +69,7 @@ const Layout = ({ children, originalPath = '/' }) => {
           <Typography className={classes.title} variant="h6">
             Lazarus
           </Typography>
-          <LanguageSwitcher />
+          <LanguageSwitcher originalPath={pageContext.slug} />
           <ThemeSwitcher />
         </Toolbar>
       </AppBar>

@@ -33,7 +33,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   const result = await graphql(`
     {
-      blog: allStrapiArticle {
+      blog: allStrapiArticle(sort: { fields: published_at, order: DESC }) {
         edges {
           node {
             locale {

@@ -12,7 +12,7 @@ import {
   Checkbox,
 } from '@material-ui/core'
 import { MdxLink } from './components/mdxLink'
-import { CodeBlock } from './components/codeBlock'
+import CodeBlock from './components/code-block'
 
 const useStyles = makeStyles((theme) => ({
   blockquote: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     margin: `1em 0`,
     borderLeft: '6px solid',
     borderLeftColor: theme.palette.primary.light,
-    maxWidth: '80vw',
+    maxWidth: '90vw',
   },
   divider: {
     margin: `${theme.spacing(2)}px 0`,
@@ -36,14 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     margin: `${theme.spacing(2)}px 0`,
-  },
-  pre: {
-    backgroundColor: 'rgba(0, 0, 0, 0.87)',
-    margin: `${theme.spacing(2)}px 0`,
-    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
-    overflowX: `auto`,
-    fontSize: '1rem',
-    maxWidth: '80vw',
   },
 }))
 
@@ -97,15 +89,7 @@ export const MDXComponents = {
       />
     )
   }),
-  pre: memo((props) => {
-    const classes = useStyles()
-    return (
-      <Paper component="pre" className={classes.pre}>
-        {props.children}
-      </Paper>
-    )
-  }),
-  code: CodeBlock,
+  pre: CodeBlock,
   table: memo((props) => {
     const classes = useStyles()
     return <Table className={classes.table} {...props} />
@@ -122,7 +106,14 @@ export const MDXComponents = {
   input: memo((props) => {
     const { type } = props
     if (type === 'checkbox') {
-      return <Checkbox {...props} disabled={false} readOnly={true} />
+      return (
+        <Checkbox
+          {...props}
+          color="secondary"
+          disabled={false}
+          readOnly={true}
+        />
+      )
     }
     return <input {...props} />
   }),
