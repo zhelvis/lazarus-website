@@ -117,4 +117,10 @@ export const MDXComponents = {
     }
     return <input {...props} />
   }),
+  img: memo((props) => (
+    <img
+      style={{ width: '100%', height: 'auto', margin: 0, borderRadius: 4 }}
+      {...props}
+    />
+  )),
 }
