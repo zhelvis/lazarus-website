@@ -50,8 +50,6 @@ const Layout = ({ children, pageContext }) => {
 
   const [open, setOpen] = React.useState(false)
 
-  console.log(pageContext)
-
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
