@@ -12,7 +12,7 @@ import usePersistedState from './usePersistedState'
 import themes from '../../src/themes'
 
 export const DarkModeContext = createContext({
-  darMode: false,
+  darkMode: false,
   toogleDarkMode: () => {},
 })
 

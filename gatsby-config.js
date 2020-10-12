@@ -42,6 +42,7 @@ module.exports = {
               strict: `ignore`,
             },
           },
+          `gatsby-remark-responsive-iframe`,
         ],
         defaultLayouts: {
           default: require.resolve(`./src/components/layout.js`),

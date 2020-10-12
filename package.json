@@ -21,6 +21,7 @@
     "gatsby-plugin-sharp": "2.6.40",
     "gatsby-remark-images": "3.3.33",
     "gatsby-remark-katex": "^3.3.14",
+    "gatsby-remark-responsive-iframe": "^2.4.17",
     "gatsby-source-filesystem": "2.3.34",
     "gatsby-source-strapi": "0.0.12",
     "gatsby-transformer-sharp": "2.5.17",
