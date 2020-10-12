@@ -3,4 +3,6 @@
  *
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
+import 'prismjs/themes/prism-dark.css'
+
 export { wrapRootElement, wrapPageElement } from './src'

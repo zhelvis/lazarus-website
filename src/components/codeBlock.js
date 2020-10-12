@@ -1,7 +1,6 @@
 import React, { memo, useCallback, useMemo, useState, useEffect } from 'react'
 import Prism from 'prismjs'
 import components from 'prismjs/components'
-import 'prismjs/themes/prism-dark.css' // or another theme
 
 const nativeLanguages = components.languages
 const nativePairs = Object.assign(
