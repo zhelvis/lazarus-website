@@ -125,6 +125,6 @@ export const MDXComponents = {
   }),
   img: memo((props) => {
     const classes = useStyles()
-    return <img className={classes.img} {...props} />
+    return <img alt="" className={classes.img} {...props} />
   }),
 }

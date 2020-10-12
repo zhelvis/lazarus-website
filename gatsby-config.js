@@ -36,6 +36,12 @@ module.exports = {
               linkImagesToOriginal: false,
             },
           },
+          {
+            resolve: `gatsby-remark-katex`,
+            options: {
+              strict: `ignore`,
+            },
+          },
         ],
         defaultLayouts: {
           default: require.resolve(`./src/components/layout.js`),
