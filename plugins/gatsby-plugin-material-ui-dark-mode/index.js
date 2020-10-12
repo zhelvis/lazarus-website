@@ -2,7 +2,11 @@ import React, { useMemo, createContext } from 'react'
 import PropTypes from 'prop-types'
 
 import { CssBaseline } from '@material-ui/core'
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import {
+  ThemeProvider,
+  createMuiTheme,
+  responsiveFontSizes,
+} from '@material-ui/core/styles'
 
 import usePersistedState from './usePersistedState'
 import themes from '../../src/themes'
@@ -18,7 +22,10 @@ export const DarkModeProvider = ({ children }) => {
   const toogleDarkMode = () => setDarkMode(!darkMode)
 
   const theme = useMemo(
-    () => createMuiTheme(darkMode ? themes.dark : themes.light),
+    () =>
+      responsiveFontSizes(
+        createMuiTheme(darkMode ? themes.dark : themes.light)
+      ),
     [darkMode]
   )
 
