@@ -37,6 +37,12 @@ const useStyles = makeStyles((theme) => ({
   table: {
     margin: `${theme.spacing(2)}px 0`,
   },
+  img: {
+    width: '100%',
+    height: 'auto',
+    margin: 0,
+    borderRadius: 4,
+  },
 }))
 
 export const MDXComponents = {
@@ -117,10 +123,8 @@ export const MDXComponents = {
     }
     return <input {...props} />
   }),
-  img: memo((props) => (
-    <img
-      style={{ width: '100%', height: 'auto', margin: 0, borderRadius: 4 }}
-      {...props}
-    />
-  )),
+  img: memo((props) => {
+    const classes = useStyles()
+    return <img className={classes.img} {...props} />
+  }),
 }
