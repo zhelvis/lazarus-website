@@ -17,7 +17,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-strapi',
       options: {
-        apiURL: 'http://151.248.117.166:1337',
+        apiURL: 'https://akwv.tech/api',
         contentTypes: ['article', 'locale'],
         queryLimit: 1000,
       },
