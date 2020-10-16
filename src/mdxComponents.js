@@ -12,7 +12,7 @@ import {
   Checkbox,
 } from '@material-ui/core'
 import { MdxLink } from './components/mdxLink'
-import CodeBlock from './components/code-block'
+import { CodeBlock } from './components/codeBlock'
 
 const useStyles = makeStyles((theme) => ({
   blockquote: {

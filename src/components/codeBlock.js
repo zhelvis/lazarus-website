@@ -1,71 +1,76 @@
-import React, { memo, useCallback, useMemo, useState, useEffect } from 'react'
-import Prism from 'prismjs'
-import components from 'prismjs/components'
+import React from 'react'
+import Highlight, { defaultProps } from 'prism-react-renderer'
+import { makeStyles, Paper } from '@material-ui/core'
+import darkTheme from 'prism-react-renderer/themes/nightOwl'
 
-const nativeLanguages = components.languages
-const nativePairs = Object.assign(
-  ...Object.entries(nativeLanguages).map(([key, value]) => ({
-    [key]: { key, lang: value },
-  }))
-)
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: `${theme.spacing(2)}px 0`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px`,
+    overflowX: `auto`,
+    fontSize: '1rem',
+    maxWidth: '90vw',
+    backgroundColor: '#333',
+  },
+}))
 
-const pairs = Object.assign(
-  ...Object.entries(nativePairs)
-    .filter(([key, value]) => value.lang.alias)
-    .map(([key, value]) => {
-      const alias = Array.isArray(value.lang.alias)
-        ? value.lang.alias
-        : [value.lang.alias]
-      return Object.assign(...alias.map((a) => ({ [a]: value })))
-    }),
-  nativePairs
-)
+const preToCodeBlock = (preProps) => {
+  if (
+    preProps.children &&
+    preProps.children.props &&
+    preProps.children.props.mdxType === 'code'
+  ) {
+    const {
+      children: codeString,
+      className = '',
+      ...props
+    } = preProps.children.props
 
-const importLang = async (language) => {
-  const { key, lang } = pairs[language]
-  if (!key) {
-    return
+    const match = className.match(/language-([\0-\uFFFF]*)/)
+
+    return {
+      codeString: codeString.trim(),
+      className,
+      language: match != null ? match[1] : '',
+      ...props,
+    }
   }
-  if (lang.require) {
-    const req = Array.isArray(lang.require) ? lang.require : [lang.require]
-    await Promise.all(req.map((language) => importLang(language)))
-  }
-  await import(`prismjs/components/prism-${key}`)
+  return undefined
 }
 
-export const CodeBlock = memo(({ children, className }) => {
-  const language = useMemo(
-    () => (className ? className.replace(/language-/, '') : ''),
-    [className]
-  )
-  const { key } = useMemo(() => pairs[language] || {}, [language])
-  const canBeHighlighted = useMemo(() => Boolean(key), [key])
-  const [isReady, setIsReady] = useState(!canBeHighlighted)
-  useEffect(() => {
-    let isCanceled = false
-    setIsReady(!canBeHighlighted)
-    if (canBeHighlighted) {
-      ;(async () => {
-        await importLang(language)
-        if (isCanceled) return
-        setIsReady(true)
-      })()
-    }
-    return () => {
-      isCanceled = true
-    }
-  }, [canBeHighlighted, language])
-  const html = useMemo(() => {
-    if (!isReady || !canBeHighlighted) {
-      return Prism.util.encode(children)
-    }
-    return Prism.highlight(children, Prism.languages[language], language)
-  }, [canBeHighlighted, children, isReady, language])
-  const createMarkup = useCallback(() => ({ __html: html }), [html])
+const Code = ({ codeString, language, ...props }) => {
+  const classes = useStyles()
+
   return (
-    <code
-      className={`language-${language}`}
-      dangerouslySetInnerHTML={createMarkup()}
-    />
+    <Highlight
+      {...defaultProps}
+      code={codeString}
+      theme={darkTheme}
+      language={language}
+    >
+      {({ className, tokens, getLineProps, getTokenProps }) => (
+        <Paper className={classes.root}>
+          <pre className={className}>
+            <code>
+              {tokens.map((line, i) => (
+                <div {...getLineProps({ line, key: i })}>
+                  {line.map((token, key) => (
+                    <span {...getTokenProps({ token, key })} />
+                  ))}
+                </div>
+              ))}
+            </code>
+          </pre>
+        </Paper>
+      )}
+    </Highlight>
   )
-})
+}
+
+export const CodeBlock = (preProps) => {
+  const props = preToCodeBlock(preProps)
+  if (props) {
+    return <Code {...props} />
+  }
+  return <pre {...preProps} />
+}
