@@ -15,10 +15,12 @@ const BlogTemplate = ({ data }) => {
         title={post.title}
         description={post.description}
         meta={[
-          {
-            name: `keywords`,
-            content: post.keywords,
-          },
+          ...(post.keywords && [
+            {
+              name: `keywords`,
+              content: post.keywords,
+            },
+          ]),
         ]}
       />
       <Typography variant="h2">{post.title}</Typography>
