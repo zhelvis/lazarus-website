@@ -12,14 +12,16 @@ const BlogTemplate = ({ data }) => {
       <SEO
         title={post.title}
         description={post.description}
-        meta={[
-          ...(post.keywords && [
-            {
-              name: `keywords`,
-              content: post.keywords,
-            },
-          ]),
-        ]}
+        meta={
+          !!post.keywords
+            ? [
+                {
+                  name: `keywords`,
+                  content: post.keywords,
+                },
+              ]
+            : []
+        }
       />
       <Typography variant="h2">{post.title}</Typography>
       <div>
