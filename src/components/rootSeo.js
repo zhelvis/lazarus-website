@@ -4,7 +4,7 @@ import { useStaticQuery, graphql, withPrefix } from 'gatsby'
 
 export const RootSEO = ({ location, pageContext }) => {
   const { locale, locales, defaultLocale, slug, hrefLang } = pageContext
-  console.log(locales)
+
   const data = useStaticQuery(graphql`
     query LocalizationSEOQuery {
       site {

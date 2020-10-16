@@ -7,8 +7,6 @@ import SEO from '../components/seo'
 const BlogTemplate = ({ data }) => {
   const post = data.strapiArticle
 
-  console.log(post.keywords)
-
   return (
     <>
       <SEO
