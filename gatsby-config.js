@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby MUI Starter`,
+    title: `Lazarus`,
     siteUrl: 'https://laughing-aryabhata-e56ed5.netlify.app',
   },
   plugins: [
