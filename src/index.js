@@ -12,7 +12,6 @@ export const wrapRootElement = ({ element }) => {
 }
 
 export const wrapPageElement = ({ element, props }) => {
-  console.log(props)
   const { pageContext, location } = props
 
   return (

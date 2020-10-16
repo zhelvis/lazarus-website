@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Gatsby MUI Starter`,
-    siteUrl: 'http://example.com',
+    siteUrl: 'https://laughing-aryabhata-e56ed5.netlify.app',
   },
   plugins: [
     `gatsby-plugin-material-ui-dark-mode`,
