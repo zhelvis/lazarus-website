@@ -38,6 +38,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           node {
             locale {
               code
+              dateFormat
+              hrefLang
+              langDir
+              localName
+              name
               default
             }
             slug
@@ -46,13 +51,13 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       }
       locales: allStrapiLocale {
         nodes {
-          localName
-          langDir
-          name
-          hrefLang
-          default
-          dateFormat
           code
+          dateFormat
+          hrefLang
+          langDir
+          localName
+          name
+          default
         }
       }
     }
@@ -69,19 +74,16 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   const defaultLocale = locales.filter((locale) => locale.default)[0].code
 
-  console.log(defaultLocale)
-
   blogPosts.forEach(({ node }) => {
     const { locale, slug } = node
 
     const localizedPath = getLocalizedPath(defaultLocale, locale.code, slug)
 
-    console.log(localizedPath)
-
     createPage({
       path: localizedPath,
       component: blogTemplate,
       context: {
+        ...locale,
         slug,
         locale: locale.code,
         defaultLocale,

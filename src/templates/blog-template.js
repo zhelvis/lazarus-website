@@ -4,12 +4,23 @@ import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import SEO from '../components/seo'
 
-const BlogTemplate = ({ data, pageContext }) => {
+const BlogTemplate = ({ data }) => {
   const post = data.strapiArticle
+
+  console.log(post.keywords)
 
   return (
     <>
-      <SEO title={post.title} description={post.description} />
+      <SEO
+        title={post.title}
+        description={post.description}
+        meta={[
+          {
+            name: `keywords`,
+            content: post.keywords,
+          },
+        ]}
+      />
       <Typography variant="h2">{post.title}</Typography>
       <div>
         <MDXRenderer>
@@ -28,6 +39,7 @@ export const query = graphql`
       title
       description
       slug
+      keywords
       childStrapiArticleContent {
         childMdx {
           body
