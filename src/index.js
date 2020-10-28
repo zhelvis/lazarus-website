@@ -14,10 +14,12 @@ export const wrapRootElement = ({ element }) => {
 export const wrapPageElement = ({ element, props }) => {
   const { pageContext, location } = props
 
-  return (
+  return Object.keys(pageContext).length !== 0 ? (
     <LocaleProvider value={pageContext}>
       <RootSEO pageContext={pageContext} location={location} />
       <Layout {...props}>{element}</Layout>
     </LocaleProvider>
+  ) : (
+    element
   )
 }
