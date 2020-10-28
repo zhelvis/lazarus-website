@@ -19,7 +19,6 @@
     "gatsby-plugin-offline": "3.2.38",
     "gatsby-plugin-react-helmet": "3.3.14",
     "gatsby-plugin-sharp": "2.6.43",
-    "gatsby-remark-images": "3.3.40",
     "gatsby-remark-katex": "3.3.14",
     "gatsby-remark-responsive-iframe": "2.4.17",
     "gatsby-source-filesystem": "2.3.37",

@@ -29,14 +29,6 @@ module.exports = {
       options: {
         gatsbyRemarkPlugins: [
           {
-            resolve: `gatsby-remark-images`,
-            options: {
-              quality: 100,
-              maxWidth: 768,
-              linkImagesToOriginal: false,
-            },
-          },
-          {
             resolve: `gatsby-remark-katex`,
             options: {
               strict: `ignore`,
