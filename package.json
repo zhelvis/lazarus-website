@@ -52,7 +52,8 @@
     "format": "prettier --write \"**/*.{js,jsx,json,mdx}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "prod": "node server.js"
   },
   "repository": {
     "type": "git",
