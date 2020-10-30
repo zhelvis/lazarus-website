@@ -1,7 +1,8 @@
 module.exports = {
   siteMetadata: {
     title: `Lazarus`,
-    siteUrl: process.env.SITE_URL,
+    siteUrl:
+      process.env.SITE_URL || 'https://laughing-aryabhata-e56ed5.netlify.app',
   },
   plugins: [
     `gatsby-plugin-material-ui-dark-mode`,
